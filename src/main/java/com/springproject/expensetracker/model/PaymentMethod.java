@@ -5,14 +5,15 @@ import javax.persistence.*;
 import com.springproject.expensetracker.dto.PaymentType;
 
 @Entity
+@Table(name = "payment_methods")
 public class PaymentMethod {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "user_id")
+	private User user;
 
     @Enumerated(EnumType.STRING)
     private PaymentType paymentType;

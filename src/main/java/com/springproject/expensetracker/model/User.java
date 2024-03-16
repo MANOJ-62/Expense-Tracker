@@ -1,19 +1,18 @@
 package com.springproject.expensetracker.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 
 
 @Entity
-public class User {
+@Table(name = "users")
+public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -28,10 +27,10 @@ public class User {
     private double currentCreditCardBalance;
     
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<PaymentMethod> paymentMethods = new ArrayList<>();
+	@JsonIgnoreProperties("user")
+	private List<PaymentMethod> paymentMethods = new ArrayList<>();
 
-    
-    public String getFirstName() {
+	public String getFirstName() {
 		return firstName;
 	}
 	public void setFirstName(String firstName) {
@@ -102,5 +101,22 @@ public class User {
 	 public List<PaymentMethod> getPaymentMethods() {
 	        return paymentMethods;
 	    }
+
+//	public void addPaymentMethod(PaymentMethod paymentMethod) {
+//		paymentMethods.add(paymentMethod);
+//		paymentMethod.setUser(this); // Set the user for the payment method
+//	}
+
+	public void addPaymentMethod(PaymentMethod paymentMethod) {
+		if (paymentMethods == null) {
+			paymentMethods = new ArrayList<>();
+		}
+		paymentMethods.add(paymentMethod);
+		paymentMethod.setUser(this); // Set the user for the payment method
+	}
+
+	public void setPaymentMethods(List<PaymentMethod> paymentMethods) {
+		this.paymentMethods = paymentMethods;
+	}
 
 }

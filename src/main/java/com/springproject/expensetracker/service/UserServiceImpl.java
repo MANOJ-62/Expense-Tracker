@@ -26,38 +26,37 @@ public class UserServiceImpl implements UserService {
     
     private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
 
-    @Override
-    public UserWithPaymentMethodsDTO getUserWithPaymentMethods(Long userId) {
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found"));
-
-        logger.info("Fetched user: {}", user);  // Log user details for debugging
-
-        UserWithPaymentMethodsDTO userDTO = new UserWithPaymentMethodsDTO();
-        userDTO.setId(user.getId());
-        userDTO.setUsername(user.getUsername());
-        userDTO.setFirstName(user.getFirstName());
-        userDTO.setLastName(user.getLastName());
-        userDTO.setEmail(user.getEmail());
-        userDTO.setMonthlyIncome(user.getMonthlyIncome());
-        userDTO.setCurrentBankBalance(user.getCurrentBankBalance());
-        userDTO.setCurrentCashBalance(user.getCurrentCashBalance());
-        userDTO.setCurrentCreditCardBalance(user.getCurrentCreditCardBalance());
-
-        // Map payment methods to DTOs
-        List<PaymentMethodDTO> paymentMethodDTOs = new ArrayList<>();
-        for (PaymentMethod paymentMethod : user.getPaymentMethods()) {
-            PaymentMethodDTO paymentMethodDTO = new PaymentMethodDTO();
-            paymentMethodDTO.setPaymentMethodId(paymentMethod.getId());
-            paymentMethodDTO.setPaymentType(paymentMethod.getPaymentType());
-            paymentMethodDTO.setName(paymentMethod.getName());
-            paymentMethodDTO.setBalance(paymentMethod.getBalance());
-            paymentMethodDTOs.add(paymentMethodDTO);
-        }
-        userDTO.setPaymentMethods(paymentMethodDTOs);
-
-        return userDTO;
-    }
+//    @Override
+//    public UserWithPaymentMethodsDTO getUserWithPaymentMethods(Long userId) {
+//        User user = userRepository.findById(userId)
+//                .orElseThrow(() -> new RuntimeException("User not found"));
+//
+//        logger.info("Fetched user: {}", user);  // Log user details for debugging
+//
+//        UserWithPaymentMethodsDTO userDTO = new UserWithPaymentMethodsDTO();
+//        userDTO.setId(user.getId());
+//        userDTO.setUsername(user.getUsername());
+//        userDTO.setFirstName(user.getFirstName());
+//        userDTO.setLastName(user.getLastName());
+//        userDTO.setEmail(user.getEmail());
+//        userDTO.setMonthlyIncome(user.getMonthlyIncome());
+//        userDTO.setCurrentBankBalance(user.getCurrentBankBalance());
+//        userDTO.setCurrentCashBalance(user.getCurrentCashBalance());
+//        userDTO.setCurrentCreditCardBalance(user.getCurrentCreditCardBalance());
+//
+//        // Map payment methods to DTOs
+//        List<PaymentMethodDTO> paymentMethodDTOs = new ArrayList<>();
+//        for (PaymentMethod paymentMethod : user.getPaymentMethods()) {
+//            PaymentMethodDTO paymentMethodDTO = new PaymentMethodDTO();
+//            paymentMethodDTO.setPaymentMethodId(paymentMethod.getId());
+//            paymentMethodDTO.setPaymentType(paymentMethod.getPaymentType());
+//            paymentMethodDTO.setName(paymentMethod.getName());
+//            paymentMethodDTO.setBalance(paymentMethod.getBalance());
+//            paymentMethodDTOs.add(paymentMethodDTO);
+//        }
+//        userDTO.setPaymentMethods(paymentMethodDTOs);
+//        return userDTO;
+//    }
 
 
     @Override
@@ -104,5 +103,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean verifyUser(String username, String email) {
         return userRepository.existsByUsernameAndEmail(username, email);
+    }
+
+    @Override
+    public UserWithPaymentMethodsDTO getUserWithPaymentMethods(Long userId) {
+        return null;
     }
 }

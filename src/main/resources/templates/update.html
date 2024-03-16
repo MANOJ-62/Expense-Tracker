@@ -1,0 +1,10 @@
+<form action="/update/{id}" method="post" th:object="${expense}">
+    <!-- Hidden field for expense id -->
+    <input type="hidden" th:field="*{id}"/>
+
+    <!-- Input fields for updating expense details -->
+    <input type="text" th:field="*{description}" placeholder="Description"/>
+    <input type="number" step="0.01" th:field="*{amount}" placeholder="Amount"/>
+    <input type="date" th:field="*{date}"/>
+    <button type="submit">Update</button>
+</form>

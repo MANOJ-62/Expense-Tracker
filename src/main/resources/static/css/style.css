@@ -1,0 +1,10 @@
+/* Add your styles here */
+body {
+    font-family: Arial, sans-serif;
+}
+
+/* Example styles */
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+}
